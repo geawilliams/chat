@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fe1d9ca0-0a2d-49e8-88e5-56c1c43913af" name="Default Changelist" comment="" />
+    <list default="true" id="fe1d9ca0-0a2d-49e8-88e5-56c1c43913af" name="Default Changelist" comment="upload current progress into git">
+      <change beforePath="$PROJECT_DIR$/../chat/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../chat/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../chat/chat.py" beforeDir="false" afterPath="$PROJECT_DIR$/../chat/chat.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,9 +18,15 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="gwilliams" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../chat" />
   </component>
   <component name="ProjectId" id="1XAOoevLr6IyCPHbjRAANnyCVgX" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -25,7 +34,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../chat" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../chat/chat.py" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -41,6 +50,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="chat" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="chat" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="D:\Software\anaconda\envs\Chatbot_Env\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../chat" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../chat/chat.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -118,14 +148,54 @@
     </task>
     <servers />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="upload current progress into git" />
+    <option name="LAST_COMMIT_MESSAGE" value="upload current progress into git" />
+  </component>
   <component name="WindowStateProjectService">
+    <state x="414" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1580486190916">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="414" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486190916" />
     <state x="719" y="328" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1580485757267">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="719" y="328" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580485757267" />
-    <state x="260" y="270" key="FileChooserDialogImpl" timestamp="1580485802766">
+    <state x="134" y="125" key="CommitChangelistDialog2" timestamp="1580485892604">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="260" y="270" key="FileChooserDialogImpl/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580485802766" />
+    <state x="134" y="125" key="CommitChangelistDialog2/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580485892604" />
+    <state x="260" y="270" key="FileChooserDialogImpl" timestamp="1580486189234">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="260" y="270" key="FileChooserDialogImpl/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486189234" />
+    <state x="362" y="422" width="260" height="212" key="Github.ShareDialog" timestamp="1580486105244">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="362" y="422" width="260" height="212" key="Github.ShareDialog/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486105244" />
+    <state x="314" y="234" key="Github.UntrackedFilesDialog" timestamp="1580486110219">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="314" y="234" key="Github.UntrackedFilesDialog/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486110219" />
+    <state width="1899" height="285" key="GridCell.Tab.0.bottom" timestamp="1580486292809">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1899" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486292809" />
+    <state width="1899" height="285" key="GridCell.Tab.0.center" timestamp="1580486292809">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1899" height="285" key="GridCell.Tab.0.center/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486292809" />
+    <state width="1899" height="285" key="GridCell.Tab.0.left" timestamp="1580486292809">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1899" height="285" key="GridCell.Tab.0.left/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486292809" />
+    <state width="1899" height="285" key="GridCell.Tab.0.right" timestamp="1580486292809">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state width="1899" height="285" key="GridCell.Tab.0.right/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486292809" />
+    <state x="311" y="393" key="git4idea.rebase.GitRebaseDialog" timestamp="1580486001698">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="311" y="393" key="git4idea.rebase.GitRebaseDialog/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486001698" />
   </component>
 </project>

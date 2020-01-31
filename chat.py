@@ -17,7 +17,7 @@ class chatBot:
 
     def fileReport(self):
         name = input("what is your name? ")
-        number = inout("what is your phone number")
+        number = input("what is your phone number")
         topic = self.topic
         chatID = 1 #------------------ToDo impliment chat logging system-------
 
