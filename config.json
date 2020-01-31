@@ -1,0 +1,147 @@
+{
+  "checks": {
+    "1": {
+      "prompt": "is only one light bulb not working?",
+      "StepN": "",
+      "topic": "electric",
+      "StepY": "You probably need to replace the light bulb. Always keep spare bulbs so you can replace the bul."
+    },
+    "2": {
+      "prompt": "is more than one light not working?",
+      "StepN": "One of the electrical switches has probably tripped. Locate the fusebox and check that all of the switches are on.",
+      "topic": "electric",
+      "StepY": ""
+    },
+    "3": {
+      "prompt": "are all lights and electrical appliances not working?",
+      "StepN": "The problem may be caused by a power cut. Please phone your electricity supplier",
+      "topic": "electric",
+      "StepY": ""
+    },
+    "4": {
+      "prompt": "are your neighbours having issues too?",
+      "StepN": "Please phone your electricity supplier to see if there is a power cut and when the power will be back on.",
+      "topic": "electric",
+      "StepY": "Try the following: · Locate the fuse box · Switch off the main power switch · Turn off all other switches · Starting with the main power switch turn all of the switches back on If you are still having problems please call your electricity supplier."
+    },
+    "5": {
+      "prompt": "Is your central heating is on?",
+      "StepN": "Try turning on your central heating to see if that fixes the problem",
+      "topic": "radiators",
+      "StepY": ""
+    },
+    "6": {
+      "prompt": "When you feel the radiators are they heating all over?",
+      "StepN": "There is air trapped in the system, follow these steps to remove it: 1. Turn system off and wait for the radiators to cool 2. Use a radiator key to turn the valve slowly anti-clockwise. Have a cloth ready to catch any water 3. You will hear a hissing sound as the air escapes 4. Close the valve quickly when water begins to come out 5. Now check your boiler pressure Repeat these steps for all affected radiators. If you are still having problems please call…..",
+      "topic": "radiators",
+      "StepY": "call the maintenance team on..."
+    },"7": {
+      "prompt": "Is the boiler switched on?",
+      "StepN": "Try turning on the boiler to see if that fixes the problem",
+      "topic": "heating",
+      "StepY": ""
+    },"8": {
+      "prompt": "Is the thermostat is turned up?",
+      "StepN": "Try turning up the thermostat to see if that fixes the problem",
+      "topic": "heating",
+      "StepY": ""
+    },"9": {
+      "prompt": "Is the clock timer on?",
+      "StepN": "Try turning the timer on to see if that fixes the problem",
+      "topic": "heating",
+      "StepY": ""
+    },"10": {
+      "prompt": "Is the pressure between 1 and 1.5?",
+      "StepN": "1. Find the top up valve (this will either be a lever that is turned parallel to the pipe to open or a tap that is turned anti-clockwise to open). 3. 2. Open the valve until the pressure reaches 1.5 bar. 4. 3. Close the valve. Only top up the pressure once. If the pressure drops again, this indicates there may be a leak in the system. Please call the team on….. to arrange an engineer visit.",
+      "topic": "heating",
+      "StepY": ""
+    },"11": {
+      "prompt": "Do you have a manual for the boiler?",
+      "StepN": "Try searching online by he make and model of your boiler for specific instructions. If you are still having problems please call the team on ....",
+      "topic": "heating",
+      "StepY": "Please refer to your manual. If you are still having problems please call the team on ...."
+    },"12": {
+      "prompt": "Are any other lights and electrical appliances not working?",
+      "StepN": "",
+      "topic": "fridge",
+      "StepY": "One of the electrical switches may have tripped. Locate the fuse box and check that all of the switches are on"
+    },"13": {
+      "prompt": "So the fridge is the only appliance not working?",
+      "StepN": "",
+      "topic": "fridge",
+      "StepY": "Please call the maintenance team on…."
+    },"14": {
+      "prompt": "Have you lost your keys?",
+	  "StepN": "",
+      "topic": "lock",
+      "StepY": "Please call the maintenance team on…..otherwise if out of hours please call a local locksmith"
+    },"15": {
+      "prompt": "Is there a fault with the lock or door?",
+      "StepN": "",
+      "topic": "lock",
+      "StepY": "Please call the maintenance team on…..otherwise if out of hours please call a local locksmith"
+    },"16": {
+	  "prompt": "Are any other lights and electrical appliances not working?",
+      "StepN": "",
+      "topic": "washing",
+      "StepY": "One of the electrical switches may have tripped. Locate the fuse box and check that all of the switches are on."
+	},"17": {
+	  "prompt": "So the washing machine is the only appliance not working?",
+      "StepN": "",
+      "topic": "washing",
+      "StepY": "Please call the maintenance team on….."
+	},"18": {
+	  "prompt": "Is the boiler is switched on?",
+      "StepN": "",
+      "topic": "boiling",
+      "StepY": "Try turning on the boiler to see if that fixes the problem"
+	},"19": {
+	  "prompt": "Is the thermostat is turned up?",
+      "StepN": "Try turning up the thermostat to see if that fixes the problem",
+      "topic": "boiler",
+      "StepY": ""
+	},"20": {
+	  "prompt": "Is the clock timer on?",
+      "StepN": "Try turning the timer on to see if that fixes the problem",
+      "topic": "boiler",
+      "StepY": ""
+	},"21": {
+	  "prompt": "Is your boiler pressure is below 1 bar?",
+      "StepN": "Record",
+      "topic": "boiler",
+      "StepY": "1. Find the top up valve (this will either be a lever that is turned parallel to the pipe to open or a tap that is turned anti-clockwise to open). 6. 2. Open the valve until the pressure reaches 1.5 bar. 7. 3. Close the valve. Only top up the pressure once. If the pressure drops again, this indicates there may be a leak in the system. Please call the team"
+	},"22": {
+	  "prompt": "Do you have a manual for the boiler?",
+      "StepN": "Try searching online by make and model of your for specific instructions. If you are still having problems please call…..",
+      "topic": "boiler",
+      "StepY": "Please refer to your manual. If you are still having problems please call…..(include out of office contact details)"
+	},"23": {
+	  "prompt": "Do you have a gas hob or oven?",
+      "StepN": "Ventilate the area and turn off the gas at the mains tap, which is usually near the meter. Leave the property. Phone the National Gas Emergencies number Wait outside for a gas engineer to arrive.",
+      "topic": "gas",
+      "StepY": "Check the hob or oven has been turned off properly."
+	},"24": {
+	  "prompt": "would you like to make a report of what is broken?",
+      "StepN": "",
+      "topic": "broken",
+      "StepY": "Record Broken"
+	}
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
