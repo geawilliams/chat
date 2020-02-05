@@ -15,11 +15,6 @@ class chatBot:
     topicChooser=None
     topics = []
 
-    def fileReport(self):
-        name = input("what is your name? ")
-        number = input("what is your phone number")
-        topic = self.topic
-        chatID = 1 #------------------ToDo impliment chat logging system-------
 
     def update(self):
         if self.state == "OPEN":
@@ -28,6 +23,19 @@ class chatBot:
             self.state_conf()
         elif self.state == "TOPIC":
             self.state_topic()
+        elif self.state =="REPORT":
+            self.state_report()
+    def state_report(self):
+        inp = cusinput("would you like to submit a maintenance request?")
+        if inp == "yes":
+            cusPrint("ok, I just need to clarify a few things.")
+            location = cusInput("where is the problem located in the property?")
+            address = cusInput("what is the address of the property?")
+            name = cusInput("and your full name please?")
+            number = cusInput("and finally what is your phone number so we can contact you?")
+            cusprint("Thank you, I have created a log of your request, we will be in contact with you as soon as possible")
+            status = "OPEN"
+            self.topic = ""
 
     def state_conf(self):
         uInp = cusInput("are you having a problem with "+ self.topic+"?")
