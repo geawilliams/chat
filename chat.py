@@ -45,9 +45,14 @@ class chatBot:
     def state_open(self):
         uin = cusInput('')
         self.topic = self.topicChooser.topic_select(self.topics,uin)
-        self.state ="CONF"
+        if self.topic == "None":
+            cusPrint("GoodBye!")
+            self.running = False
+        else:
+            self.state = "CONF"
 
     def state_topic(self):
+        fResp = ""
         for i in self.checks:
             if i[3] == self.topic:
                 inp = cusInput(i[0])
@@ -60,15 +65,16 @@ class chatBot:
                         self.fileReport()
                     if txt != "":
                         cusPrint(txt)
-                        conf = cusInput("did that fix the problem?")
+                        conf = cusInput("Did that fix the problem?")
                         if conf == "yes":
+                            fResp = "Great! is there anything else I can help you with?"
                             break
-                    else:
-                        cusPrint(txt)
                     i[2] = False
-        cusPrint("what else can I help you with?")
+        if fResp == "":
+            fResp = "I'm sorry I couldn't help you with your problem, what else may I hep you with?"
+        cusPrint(fResp)
         self.state = "OPEN"
-        self.topic = "none"
+        self.topic = ""
 
     def importData(self):
          with open('config.json') as file:
