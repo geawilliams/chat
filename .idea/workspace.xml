@@ -61,14 +61,14 @@
       <method v="2" />
     </configuration>
     <configuration name="chat" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
-      <module name="untitled" />
+      <module name="chat" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="C:\Users\gwill\Anaconda3\envs\word2vec\pythonw.exe" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="SDK_HOME" value="D:\Software\anaconda\envs\Chatbot_Env\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../chat" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -155,10 +155,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="upload current progress into git" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="282" y="151" width="1086" height="688" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1580907682902">
-      <screen x="0" y="0" width="1368" height="882" />
+    <state x="414" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1580486190916">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="282" y="151" width="1086" height="688" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1368.882@0.0.1368.882" timestamp="1580907682902" />
     <state x="414" y="180" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486190916" />
     <state x="719" y="328" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1580485757267">
       <screen x="0" y="0" width="1920" height="1050" />
@@ -180,25 +179,21 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="314" y="234" key="Github.UntrackedFilesDialog/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486110219" />
-    <state width="1348" height="230" key="GridCell.Tab.0.bottom" timestamp="1580907776243">
-      <screen x="0" y="0" width="1368" height="882" />
+    <state width="1899" height="285" key="GridCell.Tab.0.bottom" timestamp="1580486292809">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1348" height="230" key="GridCell.Tab.0.bottom/0.0.1368.882@0.0.1368.882" timestamp="1580907776243" />
     <state width="1899" height="285" key="GridCell.Tab.0.bottom/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486292809" />
-    <state width="1348" height="230" key="GridCell.Tab.0.center" timestamp="1580907776243">
-      <screen x="0" y="0" width="1368" height="882" />
+    <state width="1899" height="285" key="GridCell.Tab.0.center" timestamp="1580486292809">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1348" height="230" key="GridCell.Tab.0.center/0.0.1368.882@0.0.1368.882" timestamp="1580907776243" />
     <state width="1899" height="285" key="GridCell.Tab.0.center/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486292809" />
-    <state width="1348" height="230" key="GridCell.Tab.0.left" timestamp="1580907776242">
-      <screen x="0" y="0" width="1368" height="882" />
+    <state width="1899" height="285" key="GridCell.Tab.0.left" timestamp="1580486292809">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1348" height="230" key="GridCell.Tab.0.left/0.0.1368.882@0.0.1368.882" timestamp="1580907776242" />
     <state width="1899" height="285" key="GridCell.Tab.0.left/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486292809" />
-    <state width="1348" height="230" key="GridCell.Tab.0.right" timestamp="1580907776243">
-      <screen x="0" y="0" width="1368" height="882" />
+    <state width="1899" height="285" key="GridCell.Tab.0.right" timestamp="1580486292809">
+      <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="1348" height="230" key="GridCell.Tab.0.right/0.0.1368.882@0.0.1368.882" timestamp="1580907776243" />
     <state width="1899" height="285" key="GridCell.Tab.0.right/0.0.1920.1050/-1920.382.1920.1050@0.0.1920.1050" timestamp="1580486292809" />
     <state x="311" y="393" key="git4idea.rebase.GitRebaseDialog" timestamp="1580486001698">
       <screen x="0" y="0" width="1920" height="1050" />
