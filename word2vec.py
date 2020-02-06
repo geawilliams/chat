@@ -17,7 +17,7 @@ class w2v:
                 vectors = self.model.wv
                 if w in vectors and topic in vectors:
                     sim = self.model.similarity(topic, w)
-                    if sim>similarity:
+                    if sim>similarity and sim>0.2:
                         similarity = sim
             topSim.append([topic,similarity])
         chosenTopic = self.findTop(topSim)

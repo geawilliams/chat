@@ -6,8 +6,6 @@ class chatBot:
         self.importData()
         self.topicChooser = w2v()
         cusPrint("hi, what can I help you with?")
-        cursor = conDB()
-    cursor = None
     checks = []
     topic = "none"
     state = "OPEN"
@@ -26,14 +24,20 @@ class chatBot:
         elif self.state =="REPORT":
             self.state_report()
     def state_report(self):
-        inp = cusinput("would you like to submit a maintenance request?")
+        inp = cusInput("would you like to submit a maintenance request?")
         if inp == "yes":
             cusPrint("ok, I just need to clarify a few things.")
             location = cusInput("where is the problem located in the property?")
             address = cusInput("what is the address of the property?")
             name = cusInput("and your full name please?")
             number = cusInput("and finally what is your phone number so we can contact you?")
-            cusprint("Thank you, I have created a log of your request, we will be in contact with you as soon as possible")
+            sql = "INSERT INTO maintenance (location, addr, name, num) VALUES (%s,%s,%s,%s)"
+            val = (location,address,name,number)
+            conn = mysql.connector.connect(host="localhost", user="root", passwd="Gmysql8952w", database="bot")
+            cur = conn.cursor()
+            cur.execute(sql, val)
+            conn.commit()
+            cusPrint("Thank you, I have created a log of your request, we will be in contact with you as soon as possible")
             status = "OPEN"
             self.topic = ""
 
@@ -64,13 +68,18 @@ class chatBot:
         for i in self.checks:
             if i[3] == self.topic:
                 inp = cusInput(i[0])
+                temp=self.topics
+                temp.append("yes")
+                temp.append("no")
+                proc = self.topicChooser.topic_select(temp,inp)
                 if i[2] == True:
-                    if inp == "no":
+                    if proc == "no":
                         txt = i[1]
-                    elif inp == "yes":
+                    elif proc == "yes":
                         txt = i[4]
                     if txt == "Record":
-                        self.fileReport()
+
+                        break
                     if txt != "":
                         cusPrint(txt)
                         conf = cusInput("Did that fix the problem?")
@@ -79,10 +88,13 @@ class chatBot:
                             break
                     i[2] = False
         if fResp == "":
-            fResp = "I'm sorry I couldn't help you with your problem, what else may I hep you with?"
+            self.state = "REPORT"
+            fResp = "I'm sorry I couldn't help you with your problem"
+        else:
+            self.state = "OPEN"
+            self.topic = ""
         cusPrint(fResp)
-        self.state = "OPEN"
-        self.topic = ""
+
 
     def importData(self):
          with open('config.json') as file:
@@ -94,6 +106,9 @@ class chatBot:
             if temp[3] not in self.topics:
                 self.topics.append(temp[3])
             self.checks.append(temp)
+    def conDB(self):
+        global conn, cur
+
 
 
 def cusInput(*args):
@@ -106,11 +121,6 @@ def cusInput(*args):
 def cusPrint(msg):
     print(msg)
 
-def conDB():
-    global conn, cur
-    conn = mysql.connector.connect(host="localhost", user="root", passwd="Gmysql8952w")
-    cur = conn.cursor()
-    return cur
 
 bot = chatBot()
 while bot.running:
