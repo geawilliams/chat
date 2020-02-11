@@ -12,6 +12,7 @@ class chatBot:
     running = True
     topicChooser=None
     topics = []
+    topTopics=[]
 
 
     def update(self):
@@ -44,19 +45,25 @@ class chatBot:
     def state_conf(self):
         uInp = cusInput("are you having a problem with "+ self.topic+"?")
         temp = self.topics
-        temp.append("yes")
-        temp.append("no")
+        temp.append(["yes",["yes"]])
+        temp.append(["no",["no"]])
         res =  self.topicChooser.topic_select(temp,uInp)
-        if  res== "yes":
+        if  res[0][0]== "yes":
             self.state = "TOPIC"
-        if res=="no":
-            self.state="OPEN"
-            self.topic="none"
+        if res[0][0]=="no":
+            del self.topTopics[0]
+            if len(self.topTopics)>0:
+                self.topic = self.topTopics[0][0]
+            else:
+                self.state="OPEN"
+                self.topic="none"
+
 
 
     def state_open(self):
         uin = cusInput('')
-        self.topic = self.topicChooser.topic_select(self.topics,uin)
+        self.topTopics = self.topicChooser.topic_select(self.topics,uin)
+        self.topic = self.topTopics[0][0]
         if self.topic == "None":
             cusPrint("GoodBye!")
             self.running = False
@@ -69,9 +76,9 @@ class chatBot:
             if i[3] == self.topic:
                 inp = cusInput(i[0])
                 temp=self.topics
-                temp.append("yes")
-                temp.append("no")
-                proc = self.topicChooser.topic_select(temp,inp)
+                temp.append(["yes",["yes"]])
+                temp.append(["no",["no"]])
+                proc = self.topicChooser.topic_select(temp,inp)[0][0]
                 if i[2] == True:
                     if proc == "no":
                         txt = i[1]
@@ -97,15 +104,18 @@ class chatBot:
 
 
     def importData(self):
-         with open('config.json') as file:
+        with open('config.json') as file:
              tdata = file.read()
              data = json.loads(tdata)
-         for i in data['checks']:
+        for i in data['checks']:
             d = data['checks'][str(i)]
             temp = [d["prompt"], d["StepN"],True, d['topic'], d['StepY']]
-            if temp[3] not in self.topics:
-                self.topics.append(temp[3])
             self.checks.append(temp)
+        for i in data['topics']:
+            d=data['topics'][str(i)]
+            temp = [d['topic'],d['tags']]
+            self.topics.append(temp)
+
     def conDB(self):
         global conn, cur
 
