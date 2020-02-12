@@ -1,4 +1,35 @@
 {
+	"topics":{
+		"1":{
+			"topic":"electric",
+			"tags":["electric"]
+		},"2":{
+			"topic":"radiators",
+			"tags":["radiator"]
+		},"3":{
+			"topic":"heating",
+			"tags":["heating"]
+		},"4":{
+			"topic":"fridge",
+			"tags":["fridge"]
+		},"5":{
+			"topic":"lock",
+			"tags":["lock"]
+		},"6":{
+			"topic":"boiler",
+			"tags":["boiler"]
+		},"7":{
+			"topic":"gas",
+			"tags":["gas"]
+		},"8":{
+			"topic":"broken",
+			"tags":["broken"]
+		},"9":{
+			"topic":"None",
+			"tags":["None"]
+		}
+		
+	},
   "checks": {
     "1": {
       "prompt": "is only one light bulb not working?",
