@@ -24,6 +24,19 @@ class w2v:
 
         chosenTopic = self.findTop(topSim)
         return chosenTopic
+    def func_select(self,functions,uin):
+        finfun =None
+        similarity=0
+        tInput = word_tokenize(uin)
+        vectors = self.model.wv
+        for f in functions:
+            for w in tInput:
+                if w in vectors:
+                    nsim = self.model.similarity(f,w)
+                    if nsim>similarity and nsim>0.5:
+                        similarity = nsim
+                        finfun = f
+        return finfun
 
     def findTop(self,topSim):
         topic=""
@@ -33,9 +46,12 @@ class w2v:
         for i in reversed(topSim):
             RtopSim.append(i)
         final=[]
-        for i in range(0,3):
-            if len(RtopSim)>=i:
-                final.append(RtopSim[i])
+        if len(RtopSim)>3:
+            l=3
+        else:
+            l = len(RtopSim)
+        for i in range(l):
+            final.append(RtopSim[i])
         return final
 
     def sort(self, array):
