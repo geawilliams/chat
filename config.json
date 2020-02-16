@@ -30,6 +30,21 @@
 		}
 		
 	},
+  "info": {
+    "maintenanceNum": {
+          "data": "04500 1234567",
+          "tags": ["number", "maintenance"]
+      },
+    "officeLoc": {
+          "data": "<Office Address>",
+          "tags": ["address", "office"]
+      },
+    "botName": {
+          "data": "Support Bot",
+          "tags": ["name", "you"]
+      }
+  },
+
   "checks": {
     "1": {
       "prompt": "is only one light bulb not working?",

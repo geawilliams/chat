@@ -7,10 +7,10 @@ class w2v:
     model=None
     def __init__(self):
         self.model = gensim.models.KeyedVectors.load_word2vec_format('./GoogleNewsModel.bin',limit=100000, binary=True)
-        #self.model = Word2Vec.load("./trained_mod.model")
+        #self.model = Word2Vec.load("./trained_mod_V2.model")
     def topic_select(self,topics, uin):
         tInput = word_tokenize(uin)
-        topSim = []
+        topSim=[]
         for topic in topics:
             similarity=0
             for w in tInput:
@@ -24,6 +24,32 @@ class w2v:
 
         chosenTopic = self.findTop(topSim)
         return chosenTopic
+
+    def topic_select_V2(self, topics, uin):
+        tInput = word_tokenize(uin)
+        top_av_sim=[]
+        vectors = self.model.wv
+        for topic in topics:
+            total=0
+            n=0
+            for tag in topic[1]:
+                t=0
+                for w in tInput:
+                    if w in vectors and tag in vectors:
+                        sim = self.model.similarity(tag, w)
+                        if sim>0.2 and sim>t:
+                            t=sim
+                total+=t
+                n+=1
+            if total==0:
+                top_av_sim.append([topic[0], 0])
+            else:
+                top_av_sim.append([topic[0], total/n])
+        chosenTopic = self.findTop(top_av_sim)
+        return chosenTopic
+
+
+
     def func_select(self,functions,uin):
         finfun =None
         similarity=0
@@ -33,10 +59,10 @@ class w2v:
             for w in tInput:
                 if w in vectors:
                     nsim = self.model.similarity(f,w)
-                    if nsim>similarity and nsim>0.5:
+                    if nsim>similarity and nsim>0.25:
                         similarity = nsim
                         finfun = f
-        return finfun
+        return [finfun,similarity]
 
     def findTop(self,topSim):
         topic=""

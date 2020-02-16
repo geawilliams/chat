@@ -15,6 +15,8 @@ class chatBot:
     state = "OPEN"
     running = True
     topTopics=[]
+    lastMsg=None
+    info=[]
 #data
     topicChooser=None
     topics = []
@@ -28,7 +30,7 @@ class chatBot:
         elif self.state == "TOPIC":
             self.state_topic()
         elif self.state == "FUNC":
-            if self.function=="question":
+            if self.function=="what":
                 self.func_question()
                 self.clr()
             elif self.function=="maintenance":
@@ -40,6 +42,7 @@ class chatBot:
             elif self.function=="feedback":
                 self.func_complaint()
                 self.clr()
+
     def clr(self):
         self.state="OPEN"
         self.topic=None
@@ -65,17 +68,22 @@ class chatBot:
     def state_open(self):
         uin = cusInput('')
         #funcitionality checks (if the user wants to submit maintinance request/complaint/ask question)
-        function=None
-        functions=["maintenance", "question", "complain", "feedback"]
-        func=self.topicChooser.func_select(functions,uin)
-        if func !=None:
-            self.setFunction(func)
+        func=self.topicChooser.func_select(["what"],uin)
+        if func[0] =="what":
+            self.setFunction(func[0])
             return
+        else:
+            functions=["maintenance", "complain", "feedback"]
+            func = self.topicChooser.func_select(functions, uin)
+            if func[0] != None:
+                self.setFunction(func)
+                return
 
         #catch all: checks if problem matches troubleshooting backend
-        self.topTopics = self.topicChooser.topic_select(self.topics,uin)
+        self.topTopics = self.topicChooser.topic_select_V2(self.topics,uin)
         self.topic = self.topTopics[0][0]
         if self.topic == "None":
+            print(self.topTopics[0][0])
             cusPrint("GoodBye!")
             self.running = False
         else:
@@ -132,6 +140,9 @@ class chatBot:
             self.topic = ""
 
     def func_question(self):
+        global lastMsg
+        data = self.topicChooser.topic_select_V2(self.info,lastMsg)
+        print(data[0][0])
         self.state=="OPEN"
         self.function==None
 
@@ -158,8 +169,8 @@ class chatBot:
         if func =="maintenance":
             self.function="maintenance"
             self.state="FUNC"
-        elif func =="question":
-            self.function = "question"
+        elif func =="what":
+            self.function = "what"
             self.state = "FUNC"
         elif func == "complain":
             self.function = "complain"
@@ -177,6 +188,10 @@ class chatBot:
             d=data['topics'][str(i)]
             temp = [d['topic'],d['tags']]
             self.topics.append(temp)
+        for i in data['info']:
+            d=data['info'][i]
+            temp = [d['data'],d['tags']]
+            self.info.append(temp)
 
     def conDB(self):
         global conn, cur
@@ -185,12 +200,14 @@ class chatBot:
 
 def cusInput(*args):
     if args != None:
-        global conn,cur
+        global conn,cur, lastMsg
         sql = "INSERT INTO clog (mID, bot, msg, date, CID) VALUES(%s,%s,%s,%s,%s)"
         val = ("1", "1", args[0], datetime.datetime.now(), "1")
+
         cur.execute(sql, val)
         conn.commit()
         usrIn = input(args[0])
+        lastMsg = usrIn
     else:
         usrIn = input()
     return usrIn
