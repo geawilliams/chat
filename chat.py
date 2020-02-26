@@ -36,7 +36,7 @@ class chatBot:
             elif self.function=="maintenance":
                 self.func_maintenance()
                 self.clr()
-            elif self.function=="complaint":
+            elif self.function=="complain":
                 self.func_complaint()
                 self.clr()
             elif self.function=="feedback":
@@ -68,22 +68,21 @@ class chatBot:
     def state_open(self):
         uin = cusInput('')
         #funcitionality checks (if the user wants to submit maintinance request/complaint/ask question)
-        func=self.topicChooser.func_select(["what"],uin)
-        if func[0] =="what":
-            self.setFunction(func[0])
-            return
-        else:
-            functions=["maintenance", "complain", "feedback"]
-            func = self.topicChooser.func_select(functions, uin)
-            if func[0] != None:
-                self.setFunction(func)
-                return
+        #func=self.topicChooser.func_select(["what"],uin)
+        #if func[0] =="what":
+        #    self.setFunction(func[0])
+        #   return
+        #else:
+        #    functions=["maintenance", "complain", "feedback"]
+        #    func = self.topicChooser.func_select(functions, uin)
+        #    if func[0] != None:
+        #        self.setFunction(func[0])
+        #        return
 
         #catch all: checks if problem matches troubleshooting backend
         self.topTopics = self.topicChooser.topic_select_V2(self.topics,uin)
         self.topic = self.topTopics[0][0]
         if self.topic == "None":
-            print(self.topTopics[0][0])
             cusPrint("GoodBye!")
             self.running = False
         else:
@@ -115,7 +114,7 @@ class chatBot:
                     i[2] = False
         if fResp == "":
             fResp = "I'm sorry I couldn't help you with your problem"
-            func_maintenance()
+            self.func_maintenance()
         else:
             self.state = "OPEN"
             self.topic = ""
@@ -147,7 +146,7 @@ class chatBot:
         self.function==None
 
     def func_complaint(self):
-        inp = cusInput("would you like to submit an official complaint/feedback report")
+        inp = cusInput("would you like to me to submit an official complaint/feedback report for you")
         if inp == "yes":
             global conm, cur
             cusPrint("ok, I just need to clarify a few things.")
@@ -156,9 +155,9 @@ class chatBot:
             number = cusInput("and finally what is your phone number so we can contact you?")
             desc = cusInput("Thank you. now finally what would you like to report?")
             sql = "INSERT INTO complaint (descr, addr, name, num, topic, CID) VALUES (%s,%s,%s,%s,%s,%s)"
-            val = (desc, address, name, number, "1")
-            cur.execute(sql, val)
-            conn.commit()
+            val = (desc, address, name, number,self.topic, "1")
+            #cur.execute(sql, val)
+            #conn.commit()
             cusPrint(
                 "Thank you, the report has been created!")
             self.state = "OPEN"
