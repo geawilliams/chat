@@ -24,9 +24,9 @@
 		},"8":{
 			"topic":"broken",
 			"tags":["broken"]
-		},"9":{
-			"topic":"None",
-			"tags":["None"]
+		},"10":{
+			"topic":"lights",
+			"tags":["light"]
 		}
 		
 	},
@@ -49,13 +49,13 @@
     "1": {
       "prompt": "is only one light bulb not working?",
       "StepN": "",
-      "topic": "electric",
-      "StepY": "You probably need to replace the light bulb. Always keep spare bulbs so you can replace the bul."
+      "topic": "lights",
+      "StepY": "You probably need to replace the light bulb. Always keep spare bulbs so you can replace the bulb."
     },
     "2": {
       "prompt": "is more than one light not working?",
       "StepN": "One of the electrical switches has probably tripped. Locate the fusebox and check that all of the switches are on.",
-      "topic": "electric",
+      "topic": "lights",
       "StepY": ""
     },
     "3": {
@@ -113,9 +113,9 @@
       "StepY": "One of the electrical switches may have tripped. Locate the fuse box and check that all of the switches are on"
     },"13": {
       "prompt": "So the fridge is the only appliance not working?",
-      "StepN": "",
+      "StepN": "Please call call our office on 0744732...",
       "topic": "fridge",
-      "StepY": "Please call the maintenance team on…."
+      "StepY": "Record"
     },"14": {
       "prompt": "Have you lost your keys?",
 	  "StepN": "",
