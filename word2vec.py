@@ -1,5 +1,5 @@
 import gensim
-from gensim.models import Word2Vec
+from gensim.models import KeyedVectors
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
@@ -9,7 +9,8 @@ import nltk
 class w2v:
     model=None
     def __init__(self):
-        self.model = gensim.models.KeyedVectors.load_word2vec_format('./GoogleNewsModel.bin',limit=100000, binary=True)
+        self.model = KeyedVectors.load("./trimmed.model")
+        #self.model = gensim.models.KeyedVectors.load_word2vec_format('./GoogleNewsModel.bin',limit=100000, binary=True)
         #self.model = Word2Vec.load("./trained_mod_V2.model")
 
     def topic_select(self, topics, uin,thresh):

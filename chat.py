@@ -1,6 +1,8 @@
 import json
 import datetime
 import mysql.connector
+import random
+import string
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from word2vec import w2v
@@ -9,6 +11,7 @@ class chatBot:
         self.importData()
         self.topicChooser = w2v()
         self.conDB()
+        self.chatIDGen()
         self.cusPrint("hi, what can I help you with?")
 
 #internal states
@@ -19,6 +22,9 @@ class chatBot:
     topTopics=[]
     lastMsg=""
     MsgS=[]
+    urgent = False
+    CID=0
+    key=""
 #data
     info=[]
     topicChooser=None
@@ -54,7 +60,6 @@ class chatBot:
 
     def state_conf(self):
         if len(self.topTopics)>=1:
-
             uInp = self.cusInput("are you having a problem with "+ self.topic[0]+"?")
             temp = self.topics
             temp.append(["yes",["yes"]])
@@ -85,8 +90,8 @@ class chatBot:
         functions = ["maintenance", "complain", "feedback"]
         tInput = word_tokenize(uin)
         tremStopwInput = self.topicChooser.remStopWords(tInput)
-        stemStopInp = self.topicChooser.stem_txt(tremStopwInput)
-        func = self.topicChooser.func_select(functions, stemStopInp,0.35)
+        #stemStopInp = self.topicChooser.stem_txt(tremStopwInput)
+        func = self.topicChooser.func_select(functions, tremStopwInput,0.35)
         if func[0] != None:
             self.setFunction(func[0])
             return
@@ -157,8 +162,7 @@ class chatBot:
         temp.append(["yes",["yes"]])
         temp.append(["no",["no"]])
         res = self.topicChooser.topic_select_V2(temp, inp, 0.5)
-        urgent = self.urgencyCheck()
-        print(urgent)
+        self.urgent = self.urgencyCheck()
         if res[0][0] == "yes":
             global conm, cur
             self.cusPrint("ok, I just need to clarify a few things.")
@@ -167,11 +171,15 @@ class chatBot:
             name = self.cusInput("and your full name please?")
             number = self.cusInput("and finally what is your phone number so we can contact you?")
             sql = "INSERT INTO maintenance (loc, addr, name, num, topic, CID, emergency, MID, date) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-            val = (location, address, name, number, self.topic[0], CID,urgent,None, datetime.datetime.now())
+            val = (location, address, name, number, self.topic[0], self.key,self.urgent,None, datetime.datetime.now())
             cur.execute(sql, val)
             conn.commit()
-            self.cusPrint(
-                "Thank you, I have created a log of your request, we will be in contact with you as soon as possible")
+            if urgent:
+                self.cusPrint(
+                    "Thank you, I have created a high priority log of your request, we will be in contact with you as soon as possible")
+            else:
+                self.cusPrint(
+                    "Thank you, I have created a log of your request, we will be in contact with you as soon as possible")
             self.state = "OPEN"
             self.topic = ""
 
@@ -198,7 +206,7 @@ class chatBot:
             number = self.cusInput("and finally what is your phone number so we can contact you?")
             desc = self.cusInput("Thank you. now finally what would you like to report?")
             sql = "INSERT INTO complaint (descr, addr, name, num, topic, CID) VALUES (%s,%s,%s,%s,%s,%s)"
-            val = (desc, address, name, number,self.topic, "1")
+            val = (desc, address, name, number,self.topic, self.key)
             #cur.execute(sql, val)
             #conn.commit()
             self.cusPrint(
@@ -251,40 +259,65 @@ class chatBot:
     def conDB(self):
         global conn, cur
         conn = mysql.connector.connect(host="localhost", user="root", passwd="Gmysql8952w", database="bot")
-        cur = conn.cursor()
+        cur = conn.cursor(buffered=True)
 
     def cusInput(self,msg):
         if msg != "":
             global conn,cur
             sql = "INSERT INTO clog (mID, bot, msg, date, CID) VALUES(%s,%s,%s,%s,%s)"
-            val = ("1", "1", msg, datetime.datetime.now(), "1")
+            val = (None, "1", msg, datetime.datetime.now(), self.key)
 
-            f = open("chatLog.txt", "a")
-            f.write(msg + "\n")
-
-            #cur.execute(sql, val)
-            #conn.commit()
+        #    f = open("chatLog.txt", "a")
+        #    f.write(msg + "\n")
+        #    f.close()
+            cur.execute(sql, val)
+            conn.commit()
             usrIn = input(msg)
+            sql = "INSERT INTO clog (mID, bot, msg, date, CID) VALUES(%s,%s,%s,%s,%s)"
+            val = (None, "0", usrIn, datetime.datetime.now(), self.key)
+            cur.execute(sql, val)
+            conn.commit()
             self.MsgS.append(usrIn)
             self.lastMsg = usrIn
 
         else:
             usrIn = input()
+            sql = "INSERT INTO clog (mID, bot, msg, date, CID) VALUES(%s,%s,%s,%s,%s)"
+            val = (None, "0", usrIn, datetime.datetime.now(), self.key)
+            cur.execute(sql, val)
+            conn.commit()
             self.MsgS.append(usrIn)
             self.lastMsg = usrIn
         return usrIn
 
+    def chatIDGen(self):
+        global conn, cur
+        sql = "SELECT * FROM clog WHERE CID = %s"
+        letters = string.ascii_lowercase
+        key = (''.join(random.choice(letters) for i in range(10)))
+        #key=4
+        cur.execute(sql, (key,))
+        i=0
+        for c in cur:
+            print(c)
+            i+=1
+        if i<1:
+            self.key = key
+        else:
+            self.key = self.chatIDGen()
+
+
     def cusPrint(self, msg):
         global conn, cur
+
         sql = "INSERT INTO clog (mID, bot, msg, date, CID) VALUES(%s,%s,%s,%s,%s)"
-        val =("1","1",msg,datetime.datetime.now(),"1")
-        f=open("chatLog.txt","a")
-        f.write(msg+"\n")
-
-        #cur.execute(sql, val)
-        #conn.commit()
+        val =(None,"1",msg,datetime.datetime.now(),self.key)
+        #f=open("chatLog.txt","a")
+        #f.write(msg+"\n")
+        #f.close()
+        cur.execute(sql, val)
+        conn.commit()
         print(msg)
-
 bot = chatBot()
 while bot.running:
     bot.update()
