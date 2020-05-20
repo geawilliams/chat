@@ -12,6 +12,45 @@ class w2v:
     def __init__(self):
         self.model = KeyedVectors.load("./trimmed.model")
 
+    def topic_select_V2(self, topics, uin, thresh):
+        tInput = word_tokenize(uin)
+        top_av_sim = []
+        vectors = self.model.wv
+        for topic in topics:
+            total = 0
+            n = 0
+            for tag in topic[1]:
+                t = 0
+                for w in tInput:
+                    if w in vectors and tag in vectors:
+                        sim = self.model.similarity(tag, w)
+                        if sim > thresh:
+                            t = t + sim
+
+                total += t
+                n += 1
+            if total != 0:
+                bias = n / 10
+                average = total / n
+                score = average + bias
+                top_av_sim.append([topic[0], score])
+        chosenTopic = self.findTop(top_av_sim)
+        return chosenTopic
+
+    def func_select(self, functions, uin, thresh):
+        finfun = None
+        similarity = 0
+        tInput = uin
+        vectors = self.model.wv
+        for f in functions:
+            for w in tInput:
+                if w in vectors:
+                    nsim = self.model.similarity(f, w)
+                    if nsim > similarity and nsim > thresh:
+                        similarity = nsim
+                        finfun = f
+        return [finfun, similarity]
+
     def topic_select(self, topics, uin,thresh):
         tInput = uin
         topSim = []
@@ -35,30 +74,7 @@ class w2v:
         for m in msg:
             t.append(stemmer.stem(m))
         return t
-    def topic_select_V2(self, topics, uin, thresh):
-        tInput = word_tokenize(uin)
-        top_av_sim=[]
-        vectors = self.model.wv
-        for topic in topics:
-            total=0
-            n=0
-            for tag in topic[1]:
-                t=0
-                for w in tInput:
-                    if w in vectors and tag in vectors:
-                        sim = self.model.similarity(tag, w)
-                        if sim>thresh:
-                            t=t+sim
 
-                total+=t
-                n+=1
-            if total!=0:
-                bias = n/10
-                average = total/n
-                score = average+bias
-                top_av_sim.append([topic[0], score])
-        chosenTopic = self.findTop(top_av_sim)
-        return chosenTopic
 
     def remStopWords(self,txt):
         stopW = set(stopwords.words('english'))
@@ -68,19 +84,7 @@ class w2v:
                 filtered.append(w)
         return filtered
 
-    def func_select(self,functions,uin,thresh):
-        finfun =None
-        similarity=0
-        tInput=uin
-        vectors = self.model.wv
-        for f in functions:
-            for w in tInput:
-                if w in vectors:
-                    nsim = self.model.similarity(f,w)
-                    if nsim>similarity and nsim>thresh:
-                        similarity = nsim
-                        finfun = f
-        return [finfun,similarity]
+
 
     def findTop(self,topSim):
         topic=""

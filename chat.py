@@ -144,7 +144,7 @@ class chatBot:
             if self.topic[0] == "None":
                 cusPrint("GoodBye!")
                 self.running = False
-            elif self.topic[1]>0.3:
+            elif self.topic[1]>0.2:
                 self.state = "CONF"
             else:
                 self.cusPrint("Sorry, I didn't understand that")
