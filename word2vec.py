@@ -4,14 +4,13 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 from nltk.corpus import stopwords
 import nltk
+#uncomment code for the initial run of the program to download the nessasery NLTK corpus's used within the project
 #nltk.download('punkt')
 #nltk.download('stopwords')
 class w2v:
     model=None
     def __init__(self):
         self.model = KeyedVectors.load("./trimmed.model")
-        #self.model = gensim.models.KeyedVectors.load_word2vec_format('./GoogleNewsModel.bin',limit=100000, binary=True)
-        #self.model = Word2Vec.load("./trained_mod_V2.model")
 
     def topic_select(self, topics, uin,thresh):
         tInput = uin
@@ -29,25 +28,6 @@ class w2v:
 
         chosenTopic = self.findTop(topSim)
         return chosenTopic
-    def topic_select_V3(self,topics, uin,thresh):
-        tInput = word_tokenize(uin)
-        topSim=[]
-        vectors = self.model.wv
-        for topic in topics:
-            topicSim=0
-            topicN=0
-            for w in tInput:
-                for tag in topic[1]:
-                    if w in vectors and tag in vectors:
-                        sim = self.model.similarity(tag, w)
-                        if sim>thresh:
-                            topicSim+=sim
-                            topicN+=1
-            if topicSim!=0:
-                topSim.append([topic[0],topicSim/topicN])
-
-        chosenTopic = self.findTop(topSim)
-        return chosenTopic
 
     def stem_txt(self,msg):
         stemmer = PorterStemmer()
@@ -57,25 +37,22 @@ class w2v:
         return t
     def topic_select_V2(self, topics, uin, thresh):
         tInput = word_tokenize(uin)
-        tInput = self.stem_txt(tInput)
         top_av_sim=[]
         vectors = self.model.wv
         for topic in topics:
             total=0
             n=0
             for tag in topic[1]:
-                tag = PorterStemmer().stem(tag)
                 t=0
                 for w in tInput:
                     if w in vectors and tag in vectors:
                         sim = self.model.similarity(tag, w)
                         if sim>thresh:
                             t=t+sim
+
                 total+=t
                 n+=1
-            if total==0:
-                top_av_sim.append([topic[0], 0])
-            else:
+            if total!=0:
                 top_av_sim.append([topic[0], total/n])
         chosenTopic = self.findTop(top_av_sim)
         return chosenTopic
@@ -92,9 +69,6 @@ class w2v:
         finfun =None
         similarity=0
         tInput=uin
-        #tInput = word_tokenize(uin)
-        #tInput = self.stem_txt(tInput)
-        #tInput = self.remStopWords(tInput)
         vectors = self.model.wv
         for f in functions:
             for w in tInput:
@@ -121,19 +95,19 @@ class w2v:
             final.append(RtopSim[i])
         return final
 
-    def sort(self, array):
-        less = []
-        equal = []
-        greater = []
-        if len(array) > 1:
-            pivot = array[0]
-            for x in array:
-                if x[1] < pivot[1]:
-                    less.append(x)
-                if x[1] == pivot[1]:
-                    equal.append(x)
-                if x[1] > pivot[1]:
-                    greater.append(x)
-            return self.sort(less) + equal + self.sort(greater)
+    def sort(self, topics):
+        low = []
+        mid = []
+        high = []
+        if len(topics) > 1:
+            p = topics[0]
+            for x in topics:
+                if x[1] < p[1]:
+                    low.append(x)
+                if x[1] == p[1]:
+                    mid.append(x)
+                if x[1] > p[1]:
+                    high.append(x)
+            return self.sort(low) + mid + self.sort(high)
         else:
-            return array
+            return topics

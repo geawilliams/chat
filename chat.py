@@ -39,7 +39,7 @@ class chatBot:
         elif self.state == "TOPIC":
             self.state_topic()
         elif self.state == "FUNC":
-            if self.function=="what":
+            if self.function=="question":
                 self.func_question()
             elif self.function=="maintenance":
                 self.func_maintenance()
@@ -81,8 +81,6 @@ class chatBot:
             self.state = "OPEN"
             self.cusPrint("sorry i don't think i know what you mean, what else may i help you with?")
 
-
-
     def state_open(self):
         uin = self.cusInput('')
         #funcitionality checks (if the user wants to submit maintinance request/complaint/ask question)
@@ -90,7 +88,6 @@ class chatBot:
         functions = ["maintenance", "complain", "feedback"]
         tInput = word_tokenize(uin)
         tremStopwInput = self.topicChooser.remStopWords(tInput)
-        #stemStopInp = self.topicChooser.stem_txt(tremStopwInput)
         func = self.topicChooser.func_select(functions, tremStopwInput,0.35)
         if func[0] != None:
             self.setFunction(func[0])
@@ -98,9 +95,10 @@ class chatBot:
         #question detections, detects similar interigative words
         func=self.topicChooser.func_select(["what","where"],tInput,0.6)
         if func[0] =="what" or func[0] =="where":
-            self.setFunction("what")
+            self.setFunction("question")
             return
         else:
+            #fnally check if the users message references a preconfigured problem
             self.troubleshooter_detection(uin)
     def state_topic(self):
         fResp = ""
@@ -110,11 +108,11 @@ class chatBot:
                 temp=self.topics
                 temp.append(["yes",["yes"]])
                 temp.append(["no",["no"]])
-                proc = self.topicChooser.topic_select_V2(temp,inp, 0.6)[0][0]
+                proc = self.topicChooser.topic_select_V2(temp,inp, 0.6)
                 if i[2] == True:
-                    if proc == "no":
+                    if proc[0][0] == "no":
                         txt = i[1]
-                    elif proc == "yes":
+                    elif proc[0][0] == "yes":
                         txt = i[4]
                     if txt == "Record":
                         self.func_maintenance()
@@ -137,10 +135,10 @@ class chatBot:
         self.clr()
 
     def troubleshooter_detection(self, uin):
-        uin = word_tokenize(uin)
-        uin = self.topicChooser.remStopWords(uin)
-        urgent = self.urgencyCheck()
-        self.topTopics = self.topicChooser.topic_select(self.topics,uin,0.2)
+        #uin = word_tokenize(uin)
+        #uin = self.topicChooser.remStopWords(uin)
+        self.urgencyCheck()
+        self.topTopics = self.topicChooser.topic_select_V2(self.topics,uin,0.2)
         if(self.topTopics!=[]):
             self.topic = self.topTopics[0]
             if self.topic[0] == "None":
@@ -174,7 +172,7 @@ class chatBot:
             val = (location, address, name, number, self.topic[0], self.key,self.urgent,None, datetime.datetime.now())
             cur.execute(sql, val)
             conn.commit()
-            if urgent:
+            if self.urgent:
                 self.cusPrint(
                     "Thank you, I have created a high priority log of your request, we will be in contact with you as soon as possible")
             else:
@@ -186,10 +184,10 @@ class chatBot:
     def func_question(self):
         msg = word_tokenize(self.lastMsg)
         msg = self.topicChooser.remStopWords(msg)
-        data = self.topicChooser.topic_select(self.info,msg, 0.4)
+        data = self.topicChooser.topic_select_V2(self.info,msg, 0.4)
         if len(data)>0:
             if data[0][1] >0.4:
-                print(data[0][0])
+                self.cusPrint(data[0][0])
                 self.state="OPEN"
             else:
                 self.troubleshooter_detection(self.lastMsg)
@@ -198,17 +196,21 @@ class chatBot:
 
     def func_complaint(self):
         inp = self.cusInput("would you like to me to submit an official complaint/feedback report for you")
-        if inp == "yes":
+        temp = self.topics
+        temp.append(["yes", ["yes"]])
+        temp.append(["no", ["no"]])
+        res = self.topicChooser.topic_select_V2(temp, inp, 0.5)
+        if res[0][0] == "yes":
             global conm, cur
             self.cusPrint("ok, I just need to clarify a few things.")
             address = self.cusInput("what is the address of the property?")
             name = self.cusInput("and your full name please?")
             number = self.cusInput("and finally what is your phone number so we can contact you?")
             desc = self.cusInput("Thank you. now finally what would you like to report?")
-            sql = "INSERT INTO complaint (descr, addr, name, num, topic, CID) VALUES (%s,%s,%s,%s,%s,%s)"
-            val = (desc, address, name, number,self.topic, self.key)
-            #cur.execute(sql, val)
-            #conn.commit()
+            sql = "INSERT INTO complaint (descr, addr, name, number, CID,ID) VALUES (%s,%s,%s,%s,%s,%s)"
+            val = (desc, address, name, number, self.key,None)
+            cur.execute(sql, val)
+            conn.commit()
             self.cusPrint(
                 "Thank you, the report has been created!")
             self.state = "OPEN"
@@ -219,13 +221,13 @@ class chatBot:
         if func =="maintenance":
             self.function="maintenance"
             self.state="FUNC"
-        elif func =="what":
-            self.function = "what"
+        elif func =="question":
+            self.function = "question"
             self.state = "FUNC"
         elif func == "complain":
             self.function = "complain"
             self.state = "FUNC"
-        elif func == "complain":
+        elif func == "feedback":
             self.function = "complain"
             self.state = "FUNC"
 
@@ -251,25 +253,23 @@ class chatBot:
             str+=m
         str = word_tokenize(str)
         str = self.topicChooser.remStopWords(str)
-        out = self.topicChooser.func_select(["urgent"],str,0.4)
+        out = self.topicChooser.func_select(["urgent"],str,0.5)
         if out[0] =="urgent":
             return True
         else:
             return False
     def conDB(self):
+        #Specific mysql connection details ned to be added
         global conn, cur
         conn = mysql.connector.connect(host="localhost", user="root", passwd="Gmysql8952w", database="bot")
         cur = conn.cursor(buffered=True)
 
+    #this method is responsible for storing messages between the bot and the user (used instead of python input function)
     def cusInput(self,msg):
         if msg != "":
             global conn,cur
             sql = "INSERT INTO clog (mID, bot, msg, date, CID) VALUES(%s,%s,%s,%s,%s)"
             val = (None, "1", msg, datetime.datetime.now(), self.key)
-
-        #    f = open("chatLog.txt", "a")
-        #    f.write(msg + "\n")
-        #    f.close()
             cur.execute(sql, val)
             conn.commit()
             usrIn = input(msg)
@@ -277,6 +277,7 @@ class chatBot:
             val = (None, "0", usrIn, datetime.datetime.now(), self.key)
             cur.execute(sql, val)
             conn.commit()
+
             self.MsgS.append(usrIn)
             self.lastMsg = usrIn
 
@@ -289,13 +290,12 @@ class chatBot:
             self.MsgS.append(usrIn)
             self.lastMsg = usrIn
         return usrIn
-
+    #generates a unique ID for the current conversation
     def chatIDGen(self):
         global conn, cur
         sql = "SELECT * FROM clog WHERE CID = %s"
         letters = string.ascii_lowercase
         key = (''.join(random.choice(letters) for i in range(10)))
-        #key=4
         cur.execute(sql, (key,))
         i=0
         for c in cur:
@@ -306,15 +306,12 @@ class chatBot:
         else:
             self.key = self.chatIDGen()
 
-
+    # records all bot messages to database (used instead of python print function)
     def cusPrint(self, msg):
         global conn, cur
 
         sql = "INSERT INTO clog (mID, bot, msg, date, CID) VALUES(%s,%s,%s,%s,%s)"
         val =(None,"1",msg,datetime.datetime.now(),self.key)
-        #f=open("chatLog.txt","a")
-        #f.write(msg+"\n")
-        #f.close()
         cur.execute(sql, val)
         conn.commit()
         print(msg)

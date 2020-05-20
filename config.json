@@ -21,9 +21,6 @@
 		},"7":{
 			"topic":"gas",
 			"tags":["gas"]
-		},"8":{
-			"topic":"broken",
-			"tags":["broken"]
 		},"10":{
 			"topic":"lights",
 			"tags":["light"]
@@ -166,11 +163,6 @@
       "StepN": "Ventilate the area and turn off the gas at the mains tap, which is usually near the meter. Leave the property. Phone the National Gas Emergencies number Wait outside for a gas engineer to arrive.",
       "topic": "gas",
       "StepY": "Check the hob or oven has been turned off properly."
-	},"24": {
-	  "prompt": "would you like to make a report of what is broken?",
-      "StepN": "",
-      "topic": "broken",
-      "StepY": "Record Broken"
 	}
   }
 }
