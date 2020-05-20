@@ -53,7 +53,10 @@ class w2v:
                 total+=t
                 n+=1
             if total!=0:
-                top_av_sim.append([topic[0], total/n])
+                bias = n/10
+                average = total/n
+                score = average+bias
+                top_av_sim.append([topic[0], score])
         chosenTopic = self.findTop(top_av_sim)
         return chosenTopic
 
